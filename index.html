@@ -26,6 +26,7 @@
     .row{
         display:flex;
         flex-flow: row;
+        margin-bottom: 20px;;
     }
     .column{
         display:flex;
@@ -63,6 +64,7 @@
     }
     .content{
         margin-left:10px;
+        padding-bottom:30px;
     }
     input{
         margin-bottom: 20px;
@@ -86,10 +88,9 @@
     <h2>Inputs</h2>
   <label for="numPlants" style="font-weight: bold;">Number of Plants</label>
   <input id="numPlants" placeholder="Number of plants"></input>
-  <label for="avgSale" style="font-weight: bold;">Number of Plants</label>
+  <label for="avgSale" style="font-weight: bold;">Avg Pods per plant</label>
   <input id="avgPods" placeholder="Average number of pods"></input>
-  <label for="avgPods" style="font-weight: bold;">Number of Plants</label>
-  
+  <label for="avgPods" style="font-weight: bold;">Avg Cost per Bag</label>
   <input id="avgSale" placeholder="Average cost per bag"></input>
   </div>
   
@@ -113,12 +114,12 @@
 
   <div class="column">
     <h2>Materials</h2>
-        <h3>Water: <span id="podsDisplay"></span></h3>
-        <h3>Acetic Anhydride: <span id="rawDisplay"></span></h3>
-        <h3>Hydrochloric Acid: <span id="morphDisplay"></span></h3>
-        <h3>Ammonium Chloride: <span id="remMorphDisplay"></span></h3>
-        <h3>Calcium Oxide: <span id="bagDisplay"></span></h3>
-        <h3>Sodium Carbonate: <span id="bricksDisplay"></span></h3>
+        <h3>Water: <span id="waterDisplay"></span></h3>
+        <h3>Acetic Anhydride: <span id="aceticDisplay"></span></h3>
+        <h3>Hydrochloric Acid: <span id="hydroDisplay"></span></h3>
+        <h3>Ammonium Chloride: <span id="ammoniumDisplay"></span></h3>
+        <h3>Calcium Oxide: <span id="calcDisplay"></span></h3>
+        <h3>Sodium Carbonate: <span id="sodiumDisplay"></span></h3>
         
      
   </div>
@@ -126,15 +127,21 @@
 
   <div class="column">
     <h2>Costs & Profits</h2>
-        <h3>Water: <span id="podsDisplay"></span></h3>
-        <h3>Acetic Anhydride: <span id="rawDisplay"></span></h3>
-        <h3>Hydrochloric Acid: <span id="morphDisplay"></span></h3>
-        <h3>Ammonium Chloride: <span id="remMorphDisplay"></span></h3>
-        <h3>Calcium Oxide: <span id="bagDisplay"></span></h3>
-        <h3>Sodium Carbonate: <span id="bricksDisplay"></span></h3>
+        <h3>Water: <span id="waterDisplay2"></span></h3>
+        <h3>Acetic Anhydride: <span id="aceticDisplay2"></span></h3>
+        <h3>Hydrochloric Acid: <span id="hydroDisplay2"></span></h3>
+        <h3>Ammonium Chloride: <span id="ammoniumDisplay2"></span></h3>
+        <h3>Calcium Oxide: <span id="calcDisplay2"></span></h3>
+        <h3>Sodium Carbonate: <span id="sodiumDisplay2"></span></h3>
         
      
   </div>
+  </div>
+  <div class="row">
+    <div class="column" style="width:100%;">
+        <h1>Total Cost: <span id="totalCost"></span></h1>
+        <h1>Total Profit: <span id="totalProfit"></span></h1>
+    </div>
   </div>
   </div>
 
@@ -151,45 +158,65 @@
     const remMorphDisplay = document.getElementById("remMorphDisplay");
     const bricksDisplay = document.getElementById("bricksDisplay");
 
-    const waterDisplay = document.getElementById("bagDisplay");
-    const aceticDisplay = document.getElementById("podsDisplay");
-    const hydroDisplay = document.getElementById("rawDisplay");
-    const ammoniumDisplay = document.getElementById("morphDisplay");
-    const calcMorphDisplay = document.getElementById("remMorphDisplay");
-    const sodiumDisplay = document.getElementById("bricksDisplay");
+    const waterDisplay = document.getElementById("waterDisplay");
+    const aceticDisplay = document.getElementById("aceticDisplay");
+    const hydroDisplay = document.getElementById("hydroDisplay");
+    const ammoniumDisplay = document.getElementById("ammoniumDisplay");
+    const calcDisplay = document.getElementById("calcDisplay");
+    const sodiumDisplay = document.getElementById("sodiumDisplay");
 
-    const pods = 0;
-    const raw = 0;
-    const morph = 0;
-    const bags = 0;
-    const remMorph = 0;
-    const bricks = 0;
-    const water = 0;
+    const waterDisplay2 = document.getElementById("waterDisplay2");
+    const aceticDisplay2 = document.getElementById("aceticDisplay2");
+    const hydroDisplay2 = document.getElementById("hydroDisplay2");
+    const ammoniumDisplay2 = document.getElementById("ammoniumDisplay2");
+    const calcDisplay2 = document.getElementById("calcDisplay2");
+    const sodiumDisplay2 = document.getElementById("sodiumDisplay2");
+
+    const totalCost = document.getElementById("totalCost");
+    const totalProfit = document.getElementById("totalProfit");
     numPlants.addEventListener("input", updateDisplay);
     numPods.addEventListener("input", updateDisplay);
     bagPrice.addEventListener("input", updateDisplay);
 
     function updateDisplay() {
-        pods = numPlants * numPods;
-        raw = Math.floor( pods / 2);
-        morph = raw * 6;
-        bags = (morph / 10) * 4;
-        remMorph = morph % 8;
-        bricks = Math.floor(bags/16)
-        water = raw * 7;
-        morphDisplay.textContent = toString(morph);
-        remMorphDisplay.textContent = toString(remMorph);
-        bagDisplay.textContent = toString(bags);
-        podsDisplay.textContent = toString(pods);
-        rawDisplay.textContent = toString(raw);
-        bricksDisplay.textContent = toString(bricks);
-        waterDisplay.textContent = toString(water);
-        aceticDisplay.textContent = toString(water);
-        hydroDisplay.textContent = toString(water);
-        ammoniumDisplay.textContent = toString(water);
-        calcMorphDisplay.textContent = toString(water);
-        sodiumDisplay.textContent = toString(water);
+        const pods = numPlants.value * numPods.value;
+        const raw = Math.floor( pods / 2);
+        const morph = raw * 6;
+        const bags = Math.floor((morph / 8) * 4);
+        const remMorph = morph % 8;
+        const bricks = Math.floor(bags/16);
+        const water = raw * 7;
+        const mats = bags / 4;
+        
+        morphDisplay.textContent = morph;
+        remMorphDisplay.textContent = remMorph;
+        bagDisplay.textContent = bags;
+        podsDisplay.textContent = pods;
+        rawDisplay.textContent = raw;
+        bricksDisplay.textContent = bricks;
+        waterDisplay.textContent = water;
+        aceticDisplay.textContent = mats;
+        hydroDisplay.textContent = mats;
+        ammoniumDisplay.textContent = mats;
+        calcDisplay.textContent = mats;
+        sodiumDisplay.textContent = mats;
 
+        const waterCost = water * 10;
+        const aceticCost = mats * 30;
+        const hydroCost = mats * 20;
+        const ammoniumCost = mats * 15;
+        const calcCost = mats * 15;
+        const sodiumCost = mats * 25;
+        const totalCostNum = waterCost + aceticCost + hydroCost + ammoniumCost + calcCost + sodiumCost;
+        waterDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(waterCost);
+        aceticDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(aceticCost);
+        hydroDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(hydroCost);
+        ammoniumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(ammoniumCost);
+        calcDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(calcCost);
+        sodiumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(sodiumCost);
+
+        totalCost.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalCostNum);
+        totalProfit.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format((bags * bagPrice.value)-totalCostNum);
     }
 </script>
 </html>
