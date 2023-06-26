@@ -151,24 +151,45 @@
     const remMorphDisplay = document.getElementById("remMorphDisplay");
     const bricksDisplay = document.getElementById("bricksDisplay");
 
+    const waterDisplay = document.getElementById("bagDisplay");
+    const aceticDisplay = document.getElementById("podsDisplay");
+    const hydroDisplay = document.getElementById("rawDisplay");
+    const ammoniumDisplay = document.getElementById("morphDisplay");
+    const calcMorphDisplay = document.getElementById("remMorphDisplay");
+    const sodiumDisplay = document.getElementById("bricksDisplay");
+
+    const pods = 0;
+    const raw = 0;
+    const morph = 0;
+    const bags = 0;
+    const remMorph = 0;
+    const bricks = 0;
+    const water = 0;
     numPlants.addEventListener("input", updateDisplay);
     numPods.addEventListener("input", updateDisplay);
     bagPrice.addEventListener("input", updateDisplay);
 
     function updateDisplay() {
-        var pods = numPlants * numPods;
-        var raw = Math.floor( pods / 2);
-        var morph = raw * 6;
-        var bags = (morph / 10) * 4;
-        var remMorph = morph % 8;
-        var bricks = Math.floor(bags/16)
-        var water;
+        pods = numPlants * numPods;
+        raw = Math.floor( pods / 2);
+        morph = raw * 6;
+        bags = (morph / 10) * 4;
+        remMorph = morph % 8;
+        bricks = Math.floor(bags/16)
+        water = raw * 7;
         morphDisplay.textContent = morph;
         remMorphDisplay.textContent = remMorph;
         bagDisplay.textContent = bags;
         podsDisplay.textContent = pods;
         rawDisplay.textContent = raw;
         bricksDisplay.textContent = bricks;
+        waterDisplay.textContent = water;
+        aceticDisplay.textContent
+        hydroDisplay.textContent
+        ammoniumDisplay.textContent
+        calcMorphDisplay.textContent
+        sodiumDisplay.textContent
+
     }
 </script>
 </html>
