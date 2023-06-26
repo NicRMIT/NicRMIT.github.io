@@ -25,7 +25,23 @@
   </header>
   <div class="content">
   <h2>Content Goes Here</h2>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim leo mi, id venenatis risus commodo et.</p>
+  <input id="numPlants" placeholder="Number of plants"></input><p>Numbers entered: <span id="displayBox1"></span></p>
+  <input id="avgPods" placeholder="Average number of pods"></input><p>Numbers entered: <span id="displayBox2"></span></p>
+  <input id="avgSale" placeholder="Average cost per bag"></input><p>Numbers entered: <span id="displayBox3"></span></p>
   </div>
 </body>
+<script>
+    const numPlants = document.getElementById("numPlants");
+    const numPods = document.getElementById("avgPods");
+    const bagPrice = document.getElementById("avgSale");
+
+    numPlants.addEventListener("input", updateDisplay);
+
+
+    function updateDisplay() {
+        displayBox1.textContent = numPlants.value;
+        displayBox2.textContent = numPods.value;
+        displayBox3.textContent = bagPrice.value;
+    }
+</script>
 </html>
