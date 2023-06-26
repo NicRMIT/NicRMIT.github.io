@@ -4,45 +4,137 @@
   <meta charset="UTF-8">
   <title>My Web Page</title>
   <style>
+    .box {
+        display: flex;
+        flex-flow: column;
+        height: 100%;
+        
+      }
+      .box .row {
+        border: 1px dotted #0313fc;
+      }
+      .box .row.header {
+        flex: 0 1 auto;
+      }
+      .box .row.content {
+        flex: 1 1 auto;
+      }
+      .box .row.footer {
+        flex: 0 1 40px;
+      }
+
+    .row{
+        display:flex;
+        flex-flow: row;
+    }
+    .column{
+        display:flex;
+        flex-flow: column;
+        margin-right:200px;
+        background-color: #30E3CA;
+        border-style: none;
+        border-radius: 10px;
+        padding:10px;
+    }
     body {
       background-color: #40514E; /* Light background color */
       color: #000000; /* Black text color */
-      margin: 0 60px; /* Spacing on either side of the body */
+       /* Spacing on either side of the body */
+       margin:0px;
+       padding:0px;
+       
     }
 
-    header {
-      background-color: #11999E; /* Light background color for the header */
+    .header {
+      width:100%;
+      padding: 0;
       
+      background-color: #11999E; /* Light background color for the header */
     }
-    content{
+    h1{
+        margin-left:10px;
+        
+    }
+    .contentBack{
+        display:flex;
+        height: 100%;
         background-color: #E4F9F5;
+        justify-content: center;
+    }
+    .content{
+        margin-left:10px;
+    }
+    input{
+        margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Outcasts Drug Calculator By Nicky L</h1>
-  </header>
-  <div class="content">
+
+    <div class="box">
+        <div class="header">
+            <h1>Outcasts Drug Calculator By Nicky L</h1>
+        </div>
+    </div>
+  <div class="contentBack">
+    <div class="content">
   <h2>Heroin Calculator</h2>
-  <input id="numPlants" placeholder="Number of plants"></input><p>Numbers entered: <span id="displayBox1"></span></p>
-  <input id="avgPods" placeholder="Average number of pods"></input><p>Numbers entered: <span id="displayBox2"></span></p>
-  <input id="avgSale" placeholder="Average cost per bag"></input><p>Numbers entered: <span id="displayBox3"></span></p>
+  <div class="row">
+  <div class="column">
+    <h2>Inputs</h2>
+  <label for="numPlants" style="font-weight: bold;">Number of Plants</label>
+  <input id="numPlants" placeholder="Number of plants"></input>
+  <label for="avgSale" style="font-weight: bold;">Number of Plants</label>
+  <input id="avgPods" placeholder="Average number of pods"></input>
+  <label for="avgPods" style="font-weight: bold;">Number of Plants</label>
+  
+  <input id="avgSale" placeholder="Average cost per bag"></input>
   </div>
+  
+  <div class="column">
+    <h2>Outputs</h2>
+        <h3>Pods: <span id="podsDisplay"></span></h3>
+        <h3>Raw: <span id="rawDisplay"></span></h3>
+        <h3>Morphine: <span id="morphDisplay"></span></h3>
+        <h3>Remaining Morphine: <span id="remMorphDisplay"></span></h3>
+        <h3>Bags: <span id="bagDisplay"></span></h3>
+        <h3>Bricks: <span id="bricksDisplay"></span></h3>
+        
+     
+  </div>
+  </div>
+  </div>
+
 </body>
 <script>
     const numPlants = document.getElementById("numPlants");
     const numPods = document.getElementById("avgPods");
     const bagPrice = document.getElementById("avgSale");
 
+    const bagDisplay = document.getElementById("bagDisplay");
+    const podsDisplay = document.getElementById("podsDisplay");
+    const rawDisplay = document.getElementById("rawDisplay");
+    const morphDisplay = document.getElementById("morphDisplay");
+    const remMorphDisplay = document.getElementById("remMorphDisplay");
+    const bricksDisplay = document.getElementById("bricksDisplay");
+
     numPlants.addEventListener("input", updateDisplay);
     numPods.addEventListener("input", updateDisplay);
     bagPrice.addEventListener("input", updateDisplay);
 
     function updateDisplay() {
-        displayBox1.textContent = numPlants.value;
-        displayBox2.textContent = numPods.value;
-        displayBox3.textContent = bagPrice.value;
+        
+        var raw = Math.floor( numPlants * numPods / 2);
+        var morph = raw * 6;
+        var bags = (morph / 10) * 4;
+        var remMorph = morph % 8;
+        var bricks = Math.floor(bags/16)
+        morphDisplay.textContent = morph;
+        remMorphDisplay.textContent = remMorph;
+        bagDisplay.textContent = bags;
+        podsDisplay.textContent = numPods.value;
+        rawDisplay.textContent = raw;
+        bricksDisplay.textContent = bricks;
     }
 </script>
 </html>
