@@ -30,7 +30,7 @@
     .column{
         display:flex;
         flex-flow: column;
-        margin-right:200px;
+        margin-right:100px;
         background-color: #30E3CA;
         border-style: none;
         border-radius: 10px;
@@ -80,6 +80,8 @@
     <div class="content">
   <h2>Heroin Calculator</h2>
   <div class="row">
+
+
   <div class="column">
     <h2>Inputs</h2>
   <label for="numPlants" style="font-weight: bold;">Number of Plants</label>
@@ -91,6 +93,9 @@
   <input id="avgSale" placeholder="Average cost per bag"></input>
   </div>
   
+
+
+
   <div class="column">
     <h2>Outputs</h2>
         <h3>Pods: <span id="podsDisplay"></span></h3>
@@ -99,6 +104,34 @@
         <h3>Remaining Morphine: <span id="remMorphDisplay"></span></h3>
         <h3>Bags: <span id="bagDisplay"></span></h3>
         <h3>Bricks: <span id="bricksDisplay"></span></h3>
+        
+     
+  </div>
+
+
+
+
+  <div class="column">
+    <h2>Materials</h2>
+        <h3>Water: <span id="podsDisplay"></span></h3>
+        <h3>Acetic Anhydride: <span id="rawDisplay"></span></h3>
+        <h3>Hydrochloric Acid: <span id="morphDisplay"></span></h3>
+        <h3>Ammonium Chloride: <span id="remMorphDisplay"></span></h3>
+        <h3>Calcium Oxide: <span id="bagDisplay"></span></h3>
+        <h3>Sodium Carbonate: <span id="bricksDisplay"></span></h3>
+        
+     
+  </div>
+
+
+  <div class="column">
+    <h2>Costs & Profits</h2>
+        <h3>Water: <span id="podsDisplay"></span></h3>
+        <h3>Acetic Anhydride: <span id="rawDisplay"></span></h3>
+        <h3>Hydrochloric Acid: <span id="morphDisplay"></span></h3>
+        <h3>Ammonium Chloride: <span id="remMorphDisplay"></span></h3>
+        <h3>Calcium Oxide: <span id="bagDisplay"></span></h3>
+        <h3>Sodium Carbonate: <span id="bricksDisplay"></span></h3>
         
      
   </div>
@@ -123,16 +156,17 @@
     bagPrice.addEventListener("input", updateDisplay);
 
     function updateDisplay() {
-        
-        var raw = Math.floor( numPlants * numPods / 2);
+        var pods = numPlants * numPods;
+        var raw = Math.floor( pods / 2);
         var morph = raw * 6;
         var bags = (morph / 10) * 4;
         var remMorph = morph % 8;
         var bricks = Math.floor(bags/16)
+        var water;
         morphDisplay.textContent = morph;
         remMorphDisplay.textContent = remMorph;
         bagDisplay.textContent = bags;
-        podsDisplay.textContent = numPods.value;
+        podsDisplay.textContent = pods;
         rawDisplay.textContent = raw;
         bricksDisplay.textContent = bricks;
     }
