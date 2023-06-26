@@ -5,26 +5,26 @@
   <title>My Web Page</title>
   <style>
     body {
-      background-color: #8BD9C8; /* Light background color */
+      background-color: #40514E; /* Light background color */
       color: #000000; /* Black text color */
       margin: 0 60px; /* Spacing on either side of the body */
     }
 
     header {
-      background-color: #77C18C; /* Light background color for the header */
+      background-color: #11999E; /* Light background color for the header */
       
     }
     content{
-        background-color: #E2F0CB;
+        background-color: #E4F9F5;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>My Header</h1>
+    <h1>Outcasts Drug Calculator By Nicky L</h1>
   </header>
   <div class="content">
-  <h2>Content Goes Here</h2>
+  <h2>Heroin Calculator</h2>
   <input id="numPlants" placeholder="Number of plants"></input><p>Numbers entered: <span id="displayBox1"></span></p>
   <input id="avgPods" placeholder="Average number of pods"></input><p>Numbers entered: <span id="displayBox2"></span></p>
   <input id="avgSale" placeholder="Average cost per bag"></input><p>Numbers entered: <span id="displayBox3"></span></p>
@@ -36,7 +36,8 @@
     const bagPrice = document.getElementById("avgSale");
 
     numPlants.addEventListener("input", updateDisplay);
-
+    numPods.addEventListener("input", updateDisplay);
+    bagPrice.addEventListener("input", updateDisplay);
 
     function updateDisplay() {
         displayBox1.textContent = numPlants.value;
