@@ -30,12 +30,20 @@
 
   <div class="column">
     <h2>Inputs</h2>
-  <label for="numPlants" style="font-weight: bold;">Number of Plants</label>
-  <input id="numPlants" placeholder="Number of plants"></input>
-  <label for="avgSale" style="font-weight: bold;">Avg Pods per plant</label>
+    <a><button id="swapButton" onclick="switchInputs()" style="margin:0px;margin-left:10%;margin-bottom:20px;">Switch To Bag Input</button></a>
+  <label for="numPlants" id="numPlantsLabel" style="font-weight: bold;">Number of Plants</label>
+  <input id="numPlants"  placeholder="Number of plants"></input>
+  <label for="avgPods" id="avgSaleLabel" style="font-weight: bold;">Avg Pods per plant</label>
   <input id="avgPods" placeholder="Average number of pods"></input>
-  <label for="avgPods" style="font-weight: bold;">Avg Cost per Bag</label>
+  <label for="avgSale" id="avgPodsLabel" style="font-weight: bold;">Avg Cost per Bag</label>
   <input id="avgSale" placeholder="Average cost per bag"></input>
+  <div id="inputs2" style="display: none;">
+    <h3>Min Plants: <span id="minPlants"></span></h3>
+    <h3>Max Plants: <span id="maxPlants"></span></h3>
+    <h3>Pods: <span id="podsDisplay2"></span></h3>
+    <h3>Raw: <span id="rawDisplay2"></span></h3>
+    <h3>Morphine: <span id="morphDisplay2"></span></h3>
+  </div>
   </div>
   
 
@@ -43,12 +51,23 @@
 
   <div class="column">
     <h2>Outputs</h2>
-        <h3>Pods: <span id="podsDisplay"></span></h3>
-        <h3>Raw: <span id="rawDisplay"></span></h3>
-        <h3>Morphine: <span id="morphDisplay"></span></h3>
-        <h3>Remaining Morphine: <span id="remMorphDisplay"></span></h3>
-        <h3>Bags: <span id="bagDisplay"></span></h3>
-        <h3>Bricks: <span id="bricksDisplay"></span></h3>
+        <label for="numBags" id="numBagsLabel" style="font-weight: bold; display:none;">Number of Bags</label>
+        <input id="numBags" placeholder="Number of bags" style="display:none;"></input>
+        <label for="avgSale2" id="avgSaleLabel2" style="font-weight: bold;">Avg Cost per Bag</label>
+        <input id="avgSale2" placeholder="Average cost per bag" style="display:none;"></input>
+        <div id="outputs">
+          <h3>Pods: <span id="podsDisplay"></span></h3>
+          <h3>Raw: <span id="rawDisplay"></span></h3>
+          <h3>Morphine: <span id="morphDisplay"></span></h3>
+          <h3>Remaining Morphine: <span id="remMorphDisplay"></span></h3>
+          <h3>Bags: <span id="bagDisplay"></span></h3>
+          <h3>Bricks: <span id="bricksDisplay"></span></h3>
+        </div>
+        <div id="outputs2" style="display:hidden;">
+          <h3>Total Bags: <span id="bagDisplay2"></span></h3>
+          <h3>Extra Bags: <span id="remMorphDisplay2"></span></h3>
+          <h3>Bricks: <span id="bricksDisplay2" ></span></h3>
+        </div>
         
      
   </div>
@@ -94,7 +113,18 @@
     const numPlants = document.getElementById("numPlants");
     const numPods = document.getElementById("avgPods");
     const bagPrice = document.getElementById("avgSale");
-    const tab = "heroin";
+    const numBags = document.getElementById("numBags");
+    const bagPrice2 = document.getElementById("avgSale2");
+    const button = document.getElementById("swapButton");
+
+    const minPlantsDisplay = document.getElementById("minPlants");
+    const maxPlantsDisplay = document.getElementById("maxPlants");
+
+    const numPlantsLabel = document.getElementById("numPlantsLabel");
+    const numPodsLabel = document.getElementById("avgPodsLabel");
+    const bagPriceLabel = document.getElementById("avgSaleLabel");
+    const numBagsLabel = document.getElementById("numBagsLabel");
+    const bagPriceLabel2 = document.getElementById("avgSaleLabel2");
 
     const bagDisplay = document.getElementById("bagDisplay");
     const podsDisplay = document.getElementById("podsDisplay");
@@ -102,6 +132,16 @@
     const morphDisplay = document.getElementById("morphDisplay");
     const remMorphDisplay = document.getElementById("remMorphDisplay");
     const bricksDisplay = document.getElementById("bricksDisplay");
+
+    const bagDisplay2 = document.getElementById("bagDisplay2");
+    const podsDisplay2 = document.getElementById("podsDisplay2");
+    const rawDisplay2 = document.getElementById("rawDisplay2");
+    const morphDisplay2 = document.getElementById("morphDisplay2");
+    const remMorphDisplay2 = document.getElementById("remMorphDisplay2");
+    const bricksDisplay2= document.getElementById("bricksDisplay2");
+    
+    const inputs2 = document.getElementById("inputs2");
+    const outputs = document.getElementById("outputs");
 
     const waterDisplay = document.getElementById("waterDisplay");
     const aceticDisplay = document.getElementById("aceticDisplay");
@@ -122,8 +162,98 @@
     numPlants.addEventListener("input", updateDisplay);
     numPods.addEventListener("input", updateDisplay);
     bagPrice.addEventListener("input", updateDisplay);
+    numBags.addEventListener("input",updateDisplayBags);
+    bagPrice2.addEventListener("input",updateDisplayBags);
+    var inputType = "plants";
 
 
+
+
+    
+    function switchInputs(){
+      if(inputType == "plants"){
+          inputType = "bags";
+          swapButton.textContent = "Switch to plant input"
+          numBags.setAttribute("style","font-weight: bold;display:block;");
+          bagPrice2.setAttribute("style","font-weight: bold;display:block;");
+          numPlants.setAttribute("style","font-weight: bold;display:none;");
+          numPods.setAttribute("style","font-weight: bold;display:none;");
+          bagPrice.setAttribute("style","font-weight: bold;display:none;");
+
+          numBagsLabel.setAttribute("style","font-weight: bold;display:block;");
+          bagPriceLabel2.setAttribute("style","font-weight: bold;display:block;")
+          numPlantsLabel.setAttribute("style","font-weight: bold;display:none;");
+          numPodsLabel.setAttribute("style","font-weight: bold;display:none;");
+          bagPriceLabel.setAttribute("style","font-weight: bold;display:none;");
+          
+
+          bagDisplay.setAttribute("style","display:none;");
+          podsDisplay.setAttribute("style","display:none;");
+          rawDisplay.setAttribute("style","display:none;");
+          morphDisplay.setAttribute("style","display:none;");
+          remMorphDisplay.setAttribute("style","display:none;");
+          bricksDisplay.setAttribute("style","display:none;");
+          inputs2.setAttribute("style","display:block;");
+          outputs2.setAttribute("style","display:block;");
+          outputs.setAttribute("style","display:none;");
+          
+
+          morphDisplay.textContent = 0;
+          remMorphDisplay.textContent = 0;
+          bagDisplay.textContent = 0;
+          podsDisplay.textContent = 0;
+          rawDisplay.textContent = 0;
+          bricksDisplay.textContent = 0;
+          waterDisplay.textContent = 0;
+          aceticDisplay.textContent = 0;
+          hydroDisplay.textContent = 0;
+          ammoniumDisplay.textContent = 0;
+          calcDisplay.textContent = 0;
+          sodiumDisplay.textContent = 0;
+          waterDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(0);
+          aceticDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(0);
+          hydroDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(0);
+          ammoniumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(0);
+          calcDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(0);
+          sodiumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(0);
+          totalCost.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(0);
+          totalProfit.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(0);
+      }
+      else{
+          inputType = "plants";
+          swapButton.textContent = "Switch to bag input"
+          numBags.setAttribute("style","font-weight: bold;display:none;");
+          bagPrice2.setAttribute("style","font-weight: bold;display:none;");
+          numPlants.setAttribute("style","font-weight: bold;display:block;");
+          numPods.setAttribute("style","font-weight: bold;display:block;");
+          bagPrice.setAttribute("style","font-weight: bold;display:block;");
+
+          numBagsLabel.setAttribute("style","font-weight: bold;display:none;");
+          bagPriceLabel2.setAttribute("style","font-weight: bold;display:none;")
+          numPlantsLabel.setAttribute("style","font-weight: bold;display:block;");
+          numPodsLabel.setAttribute("style","font-weight: bold;display:block;");
+          bagPriceLabel.setAttribute("style","font-weight: bold;display:block;");
+
+          inputs2.setAttribute("style","display:none;");
+          outputs.setAttribute("style","display:blocks;");
+
+          bagDisplay.setAttribute("style","display:block;");
+          podsDisplay.setAttribute("style","display:block;");
+          rawDisplay.setAttribute("style","display:block;");
+          morphDisplay.setAttribute("style","display:block;");
+          remMorphDisplay.setAttribute("style","display:block;");
+          bricksDisplay.setAttribute("style","display:block;");
+          outputs.setAttribute("style","display:none;");
+
+          waterDisplay2.textContent = 0;
+          aceticDisplay2.textContent = 0;
+          hydroDisplay2.textContent = 0;
+          ammoniumDisplay2.textContent = 0;
+          calcDisplay2.textContent = 0;
+          sodiumDisplay2.textContent = 0;
+          updateDisplay();
+      }
+    }
 
     function updateDisplay() {
         const pods = numPlants.value * numPods.value;
@@ -164,6 +294,61 @@
 
         totalCost.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalCostNum);
         totalProfit.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format((bags * bagPrice.value)-totalCostNum);
+    }
+
+    function updateDisplayBags(){
+        const bags2 = numBags.value;
+        var rem = 0;
+        if(8-((bags2 / 4 * 8) % 8) == 8){
+            rem = 0;
+        }
+        else{
+           rem = 8-((bags2 / 4 * 8) % 8);
+        }
+        const morph2 = (bags2 / 4 * 8) + rem;
+        const raw2 = Math.floor(morph2 / 6);
+        const pods2 = Math.floor(raw2 * 2);
+        const bags3 = morph2 / 8 * 4;
+        const water2 = raw2 * 7;
+        const mats2 = Math.floor(bags3/4);
+
+        const minPlants = Math.ceil(pods2 / 5);
+
+        morphDisplay2.textContent = morph2;
+        rawDisplay2.textContent = raw2;
+        podsDisplay2.textContent = pods2;
+        bagDisplay2.textContent = bags3;
+        bricksDisplay2.textContent = Math.floor(bags3 / 16);
+        remMorphDisplay2.textContent = bags3 - bags2;
+
+        waterDisplay.textContent = water2;
+        aceticDisplay.textContent = mats2;
+        hydroDisplay.textContent = mats2;
+        ammoniumDisplay.textContent = mats2;
+        calcDisplay.textContent = mats2;
+        sodiumDisplay.textContent = mats2;
+
+        minPlantsDisplay.textContent = minPlants;
+        maxPlantsDisplay.textContent = pods2;
+
+        const waterCost2 = water2 * 10;
+        const aceticCost2 = mats2 * 30;
+        const hydroCost2 = mats2 * 20;
+        const ammoniumCost2 = mats2 * 15;
+        const calcCost2 = mats2 * 15;
+        const sodiumCost2 = mats2 * 25;
+        const totalCostNum2 = waterCost2 + aceticCost2 + hydroCost2 + ammoniumCost2 + calcCost2 + sodiumCost2;
+
+        waterDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(waterCost2);
+        aceticDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(aceticCost2);
+        hydroDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(hydroCost2);
+        ammoniumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(ammoniumCost2);
+        calcDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(calcCost2);
+        sodiumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(sodiumCost2);
+
+        totalCost.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalCostNum2);
+        totalProfit.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format((bags3 * bagPrice2.value)-totalCostNum2);
+
     }
 </script>
 </html>
