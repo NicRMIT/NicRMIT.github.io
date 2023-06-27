@@ -186,7 +186,7 @@
         const remMorph = morph % 8;
         const bricks = Math.floor(bags/16);
         const water = raw * 7;
-        const mats = bags / 4;
+        const mats = Math.floor(bags / 4);
         
         morphDisplay.textContent = morph;
         remMorphDisplay.textContent = remMorph;
