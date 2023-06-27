@@ -182,7 +182,7 @@
         const pods = numPlants.value * numPods.value;
         const raw = Math.floor( pods / 2);
         const morph = raw * 6;
-        const bags = Math.floor((morph / 8) * 4);
+        const bags = Math.floor((morph / 8)) * 4;
         const remMorph = morph % 8;
         const bricks = Math.floor(bags/16);
         const water = raw * 7;
