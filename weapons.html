@@ -24,146 +24,216 @@
   <div class="contentBack">
     <div class="content">
   <div class="row">
-  <div class="title"><h2>Heroin Calculator</h2></div></div>
+  <div class="title" style="width: auto; padding-left:15px; padding-right:15px;"><h2>Weapons Calculator</h2></div></div>
   <div class="row">
 
 
-  <div class="column">
+  <div class="column" style="width:50vw;">
     <h2>Inputs</h2>
-  <label for="numPlants" style="font-weight: bold;">Number of Plants</label>
-  <input id="numPlants" placeholder="Number of plants"></input>
-  <label for="avgSale" style="font-weight: bold;">Avg Pods per plant</label>
-  <input id="avgPods" placeholder="Average number of pods"></input>
-  <label for="avgPods" style="font-weight: bold;">Avg Cost per Bag</label>
-  <input id="avgSale" placeholder="Average cost per bag"></input>
-  </div>
-  
-
-
-
-  <div class="column">
-    <h2>Outputs</h2>
-        <h3>Pods: <span id="podsDisplay"></span></h3>
-        <h3>Raw: <span id="rawDisplay"></span></h3>
-        <h3>Morphine: <span id="morphDisplay"></span></h3>
-        <h3>Remaining Morphine: <span id="remMorphDisplay"></span></h3>
-        <h3>Bags: <span id="bagDisplay"></span></h3>
-        <h3>Bricks: <span id="bricksDisplay"></span></h3>
-        
-     
-  </div>
-
-
-
-
-  <div class="column">
-    <h2>Materials</h2>
-        <h3>Water: <span id="waterDisplay"></span></h3>
-        <h3>Acetic Anhydride: <span id="aceticDisplay"></span></h3>
-        <h3>Hydrochloric Acid: <span id="hydroDisplay"></span></h3>
-        <h3>Ammonium Chloride: <span id="ammoniumDisplay"></span></h3>
-        <h3>Calcium Oxide: <span id="calcDisplay"></span></h3>
-        <h3>Sodium Carbonate: <span id="sodiumDisplay"></span></h3>
-        
-     
-  </div>
-
-
-  <div class="column">
-    <h2>Costs & Profits</h2>
-        <h3>Water: <span id="waterDisplay2"></span></h3>
-        <h3>Acetic Anhydride: <span id="aceticDisplay2"></span></h3>
-        <h3>Hydrochloric Acid: <span id="hydroDisplay2"></span></h3>
-        <h3>Ammonium Chloride: <span id="ammoniumDisplay2"></span></h3>
-        <h3>Calcium Oxide: <span id="calcDisplay2"></span></h3>
-        <h3>Sodium Carbonate: <span id="sodiumDisplay2"></span></h3>
-        
-     
+  <label for="category" style="font-weight: bold; font-size: 26px;">Category</label>
+  <select id="category" onchange="updateSelect()">
+    <option>Select a category</option>
+    <option>Pistols</option>
+    <option>Rifles</option>
+    <option>Sub-Machine Guns</option>
+    <option>Machine Guns</option>
+    <option>Shotguns</option>
+    <option>Attachments and Ammo</option>
+    <option>Melee</option>
+  </select>
+  <label for="weapon" style="font-weight: bold; font-size: 26px;">Weapon</label>
+  <select id="weapon" onchange="updateMats()">
+    <option>Select a Weapon</option>
+  </select>
+  <label for="amount" style="font-weight: bold; font-size: 26px;">Amount</label>
+  <input id="amount" style="height:40px; margin-bottom:0; padding:0; border-width: 1px; font-size:18px; font-weight:bold; padding-left:5px;">
   </div>
   </div>
   <div class="row">
-    <div class="column" style="width:100%;">
-        <h1>Total Cost: <span id="totalCost"></span></h1>
-        <h1>Total Profit: <span id="totalProfit"></span></h1>
+    <div class="column" style="width:50vw;">
+      <h2 style="margin-bottom: 0;">Materials</h2>
+      <div id="gunMats">
+        <h3>Gun Parts: <span id="gunParts"></span></h3>
+        <h2 style="margin-bottom: 0;">Raw Resources</h2>
+        <h3>Steel: <span id="steel"></span></h3>
+      </div>
+      <div id="ammoMats" style="display:none;">
+
+      </div>
     </div>
+  </div>
+  <div class="row">
+    <div class="column" style="width:50vw;">
+      <h2>Recipe Work In Progress</h2>
+    </div>
+  </div>
+
   </div>
   </div>
 
 </body>
 <script>
-    const numPlants = document.getElementById("numPlants");
-    const numPods = document.getElementById("avgPods");
-    const bagPrice = document.getElementById("avgSale");
-    const tab = "heroin";
+    //Recipes will need to be changed eventually.
+    const pistols = {
+      "Pistol": {"Gun Parts":16,"Blueprint":1},
+      "AP Pistol":  {"Gun Parts":16,"Blueprint":1},
+      "Combat Pistol":  {"Gun Parts":16,"Blueprint":1},
+      "Heavy Pistol":  {"Gun Parts":16,"Blueprint":1},
+      "Machine Pistol":  {"Gun Parts":16,"Blueprint":1},
+      "Pistol 50":  {"Gun Parts":16,"Blueprint":1}
+    }
+    const rifles = {
+      "Assault Rifle":  {"Gun Parts":16,"Blueprint":1},
+      "Advanced Rifle":  {"Gun Parts":16,"Blueprint":1},
+      "Carbine Rifle":  {"Gun Parts":16,"Blueprint":1},
+      "Special Carbine":  {"Gun Parts":16,"Blueprint":1}
+    }
+    const lmg = {
+      "Machine Gun":  {"Gun Parts":16,"Blueprint":1},
+      "Combat Machine Gun":  {"Gun Parts":16,"Blueprint":1}
+    }
+    const smg = {
+      "Combat PDW":  {"Gun Parts":16,"Blueprint":1},
+      "Micro SMG":  {"Gun Parts":16,"Blueprint":1},
+      "Mini SMG":  {"Gun Parts":16,"Blueprint":1},
+      "SMG":  {"Gun Parts":16,"Blueprint":1}
+    }
+    const shotguns = {
+      "Bullpup Shotgun":  {"Gun Parts":16,"Blueprint":1},
+      "Double Barrel Shotgun":  {"Gun Parts":16,"Blueprint":1},
+      "Gusenberg Sweeper":  {"Gun Parts":16,"Blueprint":1},
+      "Heavy Shotgun":  {"Gun Parts":16,"Blueprint":1},
+      "Sweeper Shotgun": {"Gun Parts":16,"Blueprint":1}
+    }
+    
+    const attachmentsAmmo = {
+      "9mm Ammo": {"Copper Ingots":1,"Gun Powder":1,"Lead Granules": 1},
+      ".45 Ammo": {"Copper Ingots":1,"Gun Powder":1,"Lead Granules": 2},
+      ".357 Ammo": {"Copper Ingots":6,"Gun Powder":1,"Lead Granules": 1},
+      "7.62mm Ammo": {"Copper Ingots":4,"Gun Powder":1,"Lead Granules": 2},
+      "5.56mm Ammo": {"Copper Ingots":4,"Gun Powder":1,"Lead Granules": 1},
+      ".50 Ammo": {"Copper Ingots":9,"Gun Powder":2,"Lead Granules": 2},
+      "Scope": {"Glass":2,"Polymer Plastic":5,"Screws":1,"Scrap Electronics":1},
+      "Grip": {"Polymer Plastic":3,"Screws":2,"Plastic":1},
+      "Tactical Light": {"Glass":1,"Polymer Plastic":4,"Screws":1,"Scrap Electronics":1,"Plastic":2},
+    }
+    const melee = {
+      "Shank":{"Toothbrush":1,"Razor Blade":1}
+    }
 
-    const bagDisplay = document.getElementById("bagDisplay");
-    const podsDisplay = document.getElementById("podsDisplay");
-    const rawDisplay = document.getElementById("rawDisplay");
-    const morphDisplay = document.getElementById("morphDisplay");
-    const remMorphDisplay = document.getElementById("remMorphDisplay");
-    const bricksDisplay = document.getElementById("bricksDisplay");
+    const def = {
+      "Select a Weapon":1
+    }
+    const dropDownCat = document.getElementById("category");
+    const dropDownWeap = document.getElementById("weapon");
+    var option = document.createElement("option");
 
-    const waterDisplay = document.getElementById("waterDisplay");
-    const aceticDisplay = document.getElementById("aceticDisplay");
-    const hydroDisplay = document.getElementById("hydroDisplay");
-    const ammoniumDisplay = document.getElementById("ammoniumDisplay");
-    const calcDisplay = document.getElementById("calcDisplay");
-    const sodiumDisplay = document.getElementById("sodiumDisplay");
+    const gunMats = document.getElementById("gunMats");
+    const ammoMats = document.getElementById("ammoMats");
+    var amount = document.getElementById("amount");
+    amount.addEventListener("input",updateMats)
+    function findCategory(){
+      var category = dropDownCat.value;
+        var pointer = {};
+        switch (category){
+          case "Pistols": pointer = pistols; break;
+          case "Rifles": pointer = rifles; break;
+          case "Machine Guns": pointer = lmg; break;
+          case "Sub-Machine Guns": pointer = smg; break;
+          case "Shotguns": pointer = shotguns; break;
+          case "Attachments and Ammo": pointer = attachmentsAmmo; break;
+          case "Melee": pointer = melee; break;
+          default: pointer = def; break;
+        }
+        return pointer;
+    }
 
-    const waterDisplay2 = document.getElementById("waterDisplay2");
-    const aceticDisplay2 = document.getElementById("aceticDisplay2");
-    const hydroDisplay2 = document.getElementById("hydroDisplay2");
-    const ammoniumDisplay2 = document.getElementById("ammoniumDisplay2");
-    const calcDisplay2 = document.getElementById("calcDisplay2");
-    const sodiumDisplay2 = document.getElementById("sodiumDisplay2");
+    function updateSelect(){
+        while(dropDownWeap.firstChild){
+          dropDownWeap.removeChild(dropDownWeap.firstChild);
+        }
+        option.text = "Select a Weapon";
+        option.value = "selectWeapon";
+        dropDownWeap.appendChild(option);
+        var pointer = findCategory();
 
-    const totalCost = document.getElementById("totalCost");
-    const totalProfit = document.getElementById("totalProfit");
-    numPlants.addEventListener("input", updateDisplay);
-    numPods.addEventListener("input", updateDisplay);
-    bagPrice.addEventListener("input", updateDisplay);
+        for(var key in pointer){
+          var dynamicOption = document.createElement("option");
+          dynamicOption.text = key;
+          dynamicOption.value = key; 
+          dropDownWeap.appendChild(dynamicOption);
+        }
+        updateMats();
+    }
+
+    function updateMats(){
+      while(gunMats.firstChild){
+          gunMats.removeChild(gunMats.firstChild);
+        }
+      while(ammoMats.firstChild){
+          ammoMats.removeChild(ammoMats.firstChild);
+        }
+      if(dropDownCat.value == "Attachments and Ammo"){
+          gunMats.setAttribute("style","display:none;")
+          ammoMats.setAttribute("style","display:block;")
+    
+          var pointer = findCategory();
+          for(var key in pointer){
+            
+            if(key == dropDownWeap.value){
+              var tempDict = pointer[key];
+              for(var key2 in tempDict){
+                var dynamicText = document.createElement("h3");
+                var dynamicSpan = document.createElement("span");
+                dynamicText.innerText = key2 + ": ";
+                dynamicText.id = key2;
+                if(amount.value.length === 0){
+                  dynamicSpan.textContent = tempDict[key2] * 1;
+                }
+                else{
+                  dynamicSpan.textContent = tempDict[key2] * amount.value;
+                }
+                ammoMats.appendChild(dynamicText);
+                var span = document.getElementById(key2);
+                span.appendChild(dynamicSpan);
+              }
+
+            }
 
 
+        }
 
-    function updateDisplay() {
-        const pods = numPlants.value * numPods.value;
-        const raw = Math.floor( pods / 2);
-        const morph = raw * 6;
-        const bags = Math.floor((morph / 8)) * 4;
-        const remMorph = morph % 8;
-        const bricks = Math.floor(bags/16);
-        const water = raw * 7;
-        const mats = Math.floor(bags / 4);
-        
-        morphDisplay.textContent = morph;
-        remMorphDisplay.textContent = remMorph;
-        bagDisplay.textContent = bags;
-        podsDisplay.textContent = pods;
-        rawDisplay.textContent = raw;
-        bricksDisplay.textContent = bricks;
-        waterDisplay.textContent = water;
-        aceticDisplay.textContent = mats;
-        hydroDisplay.textContent = mats;
-        ammoniumDisplay.textContent = mats;
-        calcDisplay.textContent = mats;
-        sodiumDisplay.textContent = mats;
+      }
+      else{
+          gunMats.setAttribute("style","display:block;")
+          ammoMats.setAttribute("style","display:none;")
 
-        const waterCost = water * 10;
-        const aceticCost = mats * 30;
-        const hydroCost = mats * 20;
-        const ammoniumCost = mats * 15;
-        const calcCost = mats * 15;
-        const sodiumCost = mats * 25;
-        const totalCostNum = waterCost + aceticCost + hydroCost + ammoniumCost + calcCost + sodiumCost;
-        waterDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(waterCost);
-        aceticDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(aceticCost);
-        hydroDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(hydroCost);
-        ammoniumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(ammoniumCost);
-        calcDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(calcCost);
-        sodiumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(sodiumCost);
+          var pointer = findCategory();
+          for(var key in pointer){
+            
+            if(key == dropDownWeap.value){
+              var tempDict = pointer[key];
+              for(var key2 in tempDict){
+                var dynamicText = document.createElement("h3");
+                var dynamicSpan = document.createElement("span");
+                dynamicText.innerText = key2 + ": ";
+                dynamicText.id = key2;
+                if(amount.value.length === 0){
+                  dynamicSpan.textContent = tempDict[key2] * 1;
+                }
+                else{
+                  dynamicSpan.textContent = tempDict[key2] * amount.value;
+                }
+                console.log(amount.value)
+                gunMats.appendChild(dynamicText);
+                var span = document.getElementById(key2);
+                span.appendChild(dynamicSpan);
+              }
 
-        totalCost.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalCostNum);
-        totalProfit.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format((bags * bagPrice.value)-totalCostNum);
+            }
+
+        }
+      }
     }
 </script>
 </html>
