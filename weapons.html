@@ -16,8 +16,8 @@
           <div class="row">
             <img id="logo" src="logo.png" style="width: 50px; height: 50px;">
             <h1>Outcasts Drug Calculator By Nicky L</h1>
-            <a href="index.html"><button>Drugs</button></a>
-            <a href=""><button>Weapons</button></a>
+            <a href="index.html"><button class="navButtons">Drugs</button></a>
+            <a href=""><button class="navButtons">Weapons</button></a>
           </div>
         </div>
     </div>
@@ -26,7 +26,6 @@
   <div class="row">
   <div class="title" style="width: auto; padding-left:15px; padding-right:15px;"><h2>Weapons Calculator</h2></div></div>
   <div class="row">
-
 
   <div class="column" style="width:50vw;">
     <h2>Inputs</h2>
@@ -52,23 +51,25 @@
   <div class="row">
     <div class="column" style="width:50vw;">
       <h2 style="margin-bottom: 0;">Materials</h2>
-      <div id="gunMats">
-        <h3>Gun Parts: <span id="gunParts"></span></h3>
-        <h2 style="margin-bottom: 0;">Raw Resources</h2>
-        <h3>Steel: <span id="steel"></span></h3>
+      <div id="gunMats">   
       </div>
       <div id="ammoMats" style="display:none;">
-
       </div>
     </div>
   </div>
   <div class="row">
     <div class="column" style="width:50vw;">
       <h2>Recipe Work In Progress</h2>
+      <div class="row" style="margin-top:0;">
+        <button id="grind" style="margin-right:20px;" onclick="changeMethodGrind()">Grind</button>
+        <button id="buyout" onclick="changeMethodBuyout()">Buyout</button>
+      </div>
+      <div id="recipe">
+        
+      </div>
     </div>
   </div>
-
-  </div>
+ </div>
   </div>
 
 </body>
@@ -124,13 +125,26 @@
     const def = {
       "Select a Weapon":1
     }
+
+    const recipeOutputs = {
+        "Gun Parts":2,
+        "Plastic":1,
+        "Steel Ingots":5,
+        "Blueprint":1
+
+    }
+    const matsRecipe = {
+      "Steel Ingots":{"Iron Ingots":5,"Coal":5},
+      "Gun Parts":{"Steel":10,"Plastic":2,"Screws":1},
+      "Plastic":{"Recycled Plastic":9},
+      "Iron Ingots":{"Iron Ore":2}
+    }
     const dropDownCat = document.getElementById("category");
     const dropDownWeap = document.getElementById("weapon");
     var option = document.createElement("option");
-
     const gunMats = document.getElementById("gunMats");
     const ammoMats = document.getElementById("ammoMats");
-    var amount = document.getElementById("amount");
+    const amount = document.getElementById("amount");
     amount.addEventListener("input",updateMats)
     function findCategory(){
       var category = dropDownCat.value;
@@ -174,9 +188,9 @@
           ammoMats.removeChild(ammoMats.firstChild);
         }
       if(dropDownCat.value == "Attachments and Ammo"){
-          gunMats.setAttribute("style","display:none;")
-          ammoMats.setAttribute("style","display:block;")
-    
+          gunMats.setAttribute("style","display:none;");
+          ammoMats.setAttribute("style","display:block;");
+
           var pointer = findCategory();
           for(var key in pointer){
             
@@ -197,25 +211,32 @@
                 var span = document.getElementById(key2);
                 span.appendChild(dynamicSpan);
               }
-
             }
-
-
         }
-
       }
       else{
-          gunMats.setAttribute("style","display:block;")
-          ammoMats.setAttribute("style","display:none;")
-
+          gunMats.setAttribute("style","display:block;");
+          ammoMats.setAttribute("style","display:none;");
+          
+          
           var pointer = findCategory();
           for(var key in pointer){
-            
             if(key == dropDownWeap.value){
               var tempDict = pointer[key];
               for(var key2 in tempDict){
+                var tempRow = document.createElement("div");
+                tempRow.setAttribute("id","matsRow");
+                tempRow.setAttribute("style","display:flex;flex-direction:row;align-items: center;");
+                gunMats.appendChild(tempRow);
+                var dynamicIMG = document.createElement("img");
                 var dynamicText = document.createElement("h3");
+                dynamicText.setAttribute("style"," margin-right:10px; margin-left:10px;");
                 var dynamicSpan = document.createElement("span");
+                var tempStr = './images/' + key2.replace(/\s/g, "") + ".png";
+
+                dynamicIMG.setAttribute("src",tempStr);
+                dynamicIMG.setAttribute('id',tempStr);
+                dynamicIMG.setAttribute('class','matsImg');
                 dynamicText.innerText = key2 + ": ";
                 dynamicText.id = key2;
                 if(amount.value.length === 0){
@@ -224,8 +245,8 @@
                 else{
                   dynamicSpan.textContent = tempDict[key2] * amount.value;
                 }
-                console.log(amount.value)
-                gunMats.appendChild(dynamicText);
+                tempRow.appendChild(dynamicIMG);
+                tempRow.appendChild(dynamicText);
                 var span = document.getElementById(key2);
                 span.appendChild(dynamicSpan);
               }
@@ -234,6 +255,105 @@
 
         }
       }
+      updateRecipe();
     }
+    var grindBuyout = "grind";
+    const recipeDiv = document.getElementById("recipe");
+    const grindButton = document.getElementById("grind");
+    const buyoutButton = document.getElementById("buyout");
+    function changeMethodGrind(){
+      grindBuyout = "grind";
+      updateRecipe(grindBuyout);
+    }
+    function changeMethodBuyout(){
+        grindBuyout = "buyout";
+        updateRecipe(grindBuyout);
+    }
+
+    function updateRecipe(grind){
+      while(recipeDiv.firstChild){
+          recipeDiv.removeChild(recipeDiv.firstChild);
+        }
+      if(grind == "grind"){
+
+      }
+      else{
+
+        var pointer = findCategory();
+        var tempRow = document.createElement("div");
+        tempRow.setAttribute("style","display:flex;flex-direction:row;align-items: center;");
+        if(dropDownCat.value != "Attachments and Ammo"){
+          var steelRow = document.createElement("div");
+          steelRow.setAttribute("style","display:flex;flex-direction:row;align-items: center;");
+          var dynamicIMG = document.createElement("img");
+          var dynamicSpan = document.createElement("span");
+          var dynamicText = document.createElement("h3");
+          dynamicIMG.setAttribute("src",'./images/SteelIngotsRecipe.png');
+          dynamicIMG.setAttribute('id',"SteelIngotsRecipe");
+          dynamicIMG.setAttribute('class',"recipeImg");
+          dynamicText.setAttribute("style","margin-right:10px; margin-left:10px;");
+          dynamicText.textContent = "X";
+          var numParts = 0;
+          for(var i in pointer){
+            if(i == dropDownWeap.value){
+              for(var j in pointer[i]){
+                if(j == "Gun Parts"){
+                  numParts = pointer[i][j];
+                  console.log(numParts);
+                }
+              }
+            }
+          }
+          
+          if(amount.value.length === 0){
+                  dynamicSpan.textContent = numParts / recipeOutputs["Gun Parts"] * matsRecipe["Gun Parts"]["Steel"] / matsRecipe["Steel Ingots"]["Iron Ingots"] * 1;
+                  console.log(matsRecipe["Gun Parts"]["Iron Ingots"]);
+                }
+          else{
+                  dynamicSpan.textContent = numParts / recipeOutputs["Gun Parts"] * matsRecipe["Gun Parts"]["Steel"] / matsRecipe["Steel Ingots"]["Iron Ingots"] * amount.value;
+                }
+          steelRow.appendChild(dynamicIMG);
+          steelRow.appendChild(dynamicText);
+          steelRow.appendChild(dynamicSpan);
+          recipeDiv.appendChild(steelRow);
+        }
+          for(var weapon in pointer){
+            if(weapon == dropDownWeap.value){
+              var tempDict = pointer[weapon];
+              for(var mat in tempDict){
+                var tempRow = document.createElement("div");
+                tempRow.setAttribute("class","recipeRow");
+                tempRow.setAttribute("style","display:flex;flex-direction:row;align-items: center;");
+                var dynamicIMG = document.createElement("img");
+                var dynamicText = document.createElement("h3");
+                dynamicText.setAttribute("style","margin-right:10px; margin-left:10px;");
+                var dynamicSpan = document.createElement("span");
+                
+                var tempStr = './images/' + mat.replace(/\s/g, "") + "Recipe.png";
+                dynamicIMG.setAttribute("src",tempStr);
+                dynamicIMG.setAttribute('id',tempStr);
+                dynamicIMG.setAttribute('class',"recipeImg");
+                if(amount.value.length === 0){
+                  dynamicSpan.textContent = tempDict[mat] / recipeOutputs[mat] * 1;
+                }
+                else{
+                  dynamicSpan.textContent = tempDict[mat] / recipeOutputs[mat] * amount.value;
+                }
+                
+                dynamicText.innerText = "X";
+                dynamicText.id = mat;
+                tempRow.appendChild(dynamicIMG);
+                tempRow.appendChild(dynamicText);
+                tempRow.appendChild(dynamicSpan);
+                recipeDiv.appendChild(tempRow);
+              }
+
+            }
+
+        }
+        
+      }
+    }
+    
 </script>
 </html>
