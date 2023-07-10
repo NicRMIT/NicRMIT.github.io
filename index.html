@@ -167,7 +167,7 @@
     var inputType = "plants";
 
 
-
+    
 
     
     function switchInputs(){
@@ -262,7 +262,7 @@
         const morph = raw * 6;
         const bags = Math.floor((morph / 8)) * 4;
         const remMorph = morph % 8;
-        const bricks = Math.floor(bags/16);
+        const bricks = Math.floor(bags/1024);
         const water = raw * 7;
         const mats = Math.floor(bags / 4);
         
@@ -279,22 +279,34 @@
         calcDisplay.textContent = mats;
         sodiumDisplay.textContent = mats;
 
-        const waterCost = water * 10;
-        const aceticCost = mats * 30;
-        const hydroCost = mats * 20;
-        const ammoniumCost = mats * 15;
-        const calcCost = mats * 15;
-        const sodiumCost = mats * 25;
-        const totalCostNum = waterCost + aceticCost + hydroCost + ammoniumCost + calcCost + sodiumCost;
-        waterDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(waterCost);
-        aceticDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(aceticCost);
-        hydroDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(hydroCost);
-        ammoniumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(ammoniumCost);
-        calcDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(calcCost);
-        sodiumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(sodiumCost);
+        var waterCost = water * 10;
+        var aceticCost = mats * 30;
+        var hydroCost = mats * 20;
+        var ammoniumCost = mats * 15;
+        var calcCost = mats * 15;
+        var sodiumCost = mats * 25;
+        var totalCostNum = waterCost + aceticCost + hydroCost + ammoniumCost + calcCost + sodiumCost;
 
-        totalCost.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalCostNum);
-        totalProfit.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format((bags * bagPrice.value)-totalCostNum);
+        var waterCost3 = water * 8;
+        var aceticCost3 = mats * 25;
+        var hydroCost3 = mats * 15;
+        var ammoniumCost3 = mats * 10;
+        var calcCost3 = mats * 10;
+        var sodiumCost3 = mats * 20;
+
+        //Total black market cost
+        var totalCostNum3 = waterCost3 + aceticCost3 + hydroCost3 + ammoniumCost3 + calcCost3 + sodiumCost3;
+        waterDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(waterCost3) + " - " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(waterCost);
+        aceticDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(aceticCost3) + " - " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(aceticCost);
+        hydroDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(hydroCost3) + " - " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(hydroCost);
+        ammoniumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(ammoniumCost3) + " - " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(ammoniumCost);
+        calcDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(calcCost3) + " - " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(calcCost);
+        sodiumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(sodiumCost3) + " - " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(sodiumCost);
+
+        var cost1 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalCostNum);
+        var cost2 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalCostNum3);
+        totalCost.textContent = cost2 + " - " + cost1;
+        totalProfit.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format((bags * bagPrice.value)-totalCostNum) + " - " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format((bags * bagPrice.value)-totalCostNum3);
     }
 
     function updateDisplayBags(){
@@ -306,12 +318,12 @@
         else{
            rem = 8-((bags2 / 4 * 8) % 8);
         }
-        const morph2 = (bags2 / 4 * 8) + rem;
-        const raw2 = Math.floor(morph2 / 6);
-        const pods2 = Math.floor(raw2 * 2);
-        const bags3 = morph2 / 8 * 4;
-        const water2 = raw2 * 7;
-        const mats2 = Math.floor(bags3/4);
+        var morph2 = (bags2 / 4 * 8) + rem;
+        var raw2 = Math.floor(morph2 / 6);
+        var pods2 = Math.floor(raw2 * 2);
+        var bags3 = morph2 / 8 * 4;
+        var water2 = raw2 * 7;
+        var mats2 = Math.floor(bags3/4);
 
         const minPlants = Math.ceil(pods2 / 5);
 
@@ -319,7 +331,7 @@
         rawDisplay2.textContent = raw2;
         podsDisplay2.textContent = pods2;
         bagDisplay2.textContent = bags3;
-        bricksDisplay2.textContent = Math.floor(bags3 / 16);
+        bricksDisplay2.textContent = Math.floor(bags3 / 1024.00);
         remMorphDisplay2.textContent = bags3 - bags2;
 
         waterDisplay.textContent = water2;
@@ -332,23 +344,35 @@
         minPlantsDisplay.textContent = minPlants;
         maxPlantsDisplay.textContent = pods2;
 
-        const waterCost2 = water2 * 10;
-        const aceticCost2 = mats2 * 30;
-        const hydroCost2 = mats2 * 20;
-        const ammoniumCost2 = mats2 * 15;
-        const calcCost2 = mats2 * 15;
-        const sodiumCost2 = mats2 * 25;
-        const totalCostNum2 = waterCost2 + aceticCost2 + hydroCost2 + ammoniumCost2 + calcCost2 + sodiumCost2;
+        var waterCost2 = water2 * 10;
+        var aceticCost2 = mats2 * 30;
+        var hydroCost2 = mats2 * 20;
+        var ammoniumCost2 = mats2 * 15;
+        var calcCost2 = mats2 * 15;
+        var sodiumCost2 = mats2 * 25;
 
-        waterDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(waterCost2);
-        aceticDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(aceticCost2);
-        hydroDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(hydroCost2);
-        ammoniumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(ammoniumCost2);
-        calcDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(calcCost2);
-        sodiumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(sodiumCost2);
+        //Black market costs
+        var waterCost3 = water2 * 8;
+        var aceticCost3 = mats2 * 25;
+        var hydroCost3 = mats2 * 15;
+        var ammoniumCost3 = mats2 * 10;
+        var calcCost3 = mats2 * 10;
+        var sodiumCost3 = mats2 * 20;
+        
+        var totalCostNum2 = waterCost2 + aceticCost2 + hydroCost2 + ammoniumCost2 + calcCost2 + sodiumCost2;
+        //Total black market cost
+        var totalCostNum3 = waterCost3 + aceticCost3 + hydroCost3 + ammoniumCost3 + calcCost3 + sodiumCost3;
+        waterDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(waterCost3) + " - " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(waterCost2);
+        aceticDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(aceticCost3) + " - " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(aceticCost2);
+        hydroDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(hydroCost3) + " - " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(hydroCost2);
+        ammoniumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(ammoniumCost3) + " - " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(ammoniumCost2);
+        calcDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(calcCost3) + " - " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(calcCost2);
+        sodiumDisplay2.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(sodiumCost3) + " - " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(sodiumCost2);
 
-        totalCost.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalCostNum2);
-        totalProfit.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format((bags3 * bagPrice2.value)-totalCostNum2);
+        var cost1 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalCostNum2);
+        var cost2 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalCostNum3);
+        totalCost.textContent = cost2 + " - " + cost1;
+        totalProfit.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format((bags3 * bagPrice2.value)-totalCostNum2) + " - " + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format((bags3 * bagPrice2.value)-totalCostNum3);
 
     }
 </script>
